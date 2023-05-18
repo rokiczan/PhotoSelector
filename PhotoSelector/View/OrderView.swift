@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  OrderView.swift
 //  PhotoSelector
 //
 //  Created by Maciej Rokiczan on 23/04/2023.
@@ -8,14 +8,25 @@
 import SwiftUI
 import PhotosUI
 
-struct ContentView: View {
+struct OrderView: View {
+    @EnvironmentObject var viewState: ViewState
+    @EnvironmentObject var store: OrderStore
     
     @State private var selectedItems = [PhotosPickerItem]()
     @State private var selectedPhotos = [Photo]()
     
     var body: some View {
         VStack {
-            
+            HStack{
+                
+                if let selectedOrder = viewState.selectedOrder, let index = store.index(for: selectedOrder) {
+                    Text("zz\(selectedOrder.id)")
+                }
+                //Text("\(viewState.selectedOrder)")
+                Button(action: {viewState.showAllOrders = true}) {
+                    Text("Done")
+                }
+            }
             TabView{
                 ForEach(selectedPhotos) { selectedPhoto in
                     PhotoView(fileName: selectedPhoto.id)
@@ -54,11 +65,18 @@ struct ContentView: View {
                 }
         }
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {viewState.showAllOrders = true}) {
+                    Text("Done")
+                }
+            }
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

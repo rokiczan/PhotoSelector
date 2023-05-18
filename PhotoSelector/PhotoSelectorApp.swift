@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct PhotoSelectorApp: App {
+    @StateObject var store = OrderStore()
+    @StateObject var viewState = ViewState()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            OrdersView()
+                .environmentObject(store)
+                .environmentObject(viewState)
         }
     }
 }
