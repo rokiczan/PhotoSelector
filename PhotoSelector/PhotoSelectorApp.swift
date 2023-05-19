@@ -17,6 +17,9 @@ struct PhotoSelectorApp: App {
             OrdersView()
                 .environmentObject(store)
                 .environmentObject(viewState)
+                .onAppear{
+                    print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path ?? "zzz")
+                }
         }
     }
 }

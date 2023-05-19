@@ -27,9 +27,11 @@ struct OrdersView: View {
                 }
             }
             if !viewState.showAllOrders {
-                OrderView()
-                    .transition(.move(edge: .bottom))
-                    .zIndex(1)
+                if let index = store.index(for: viewState.selectedOrder!) {
+                    OrderView(order: $store.orders[index])
+                        .transition(.move(edge: .bottom))
+                        .zIndex(1)
+                }
             }
         }
         .background(

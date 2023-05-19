@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Photo: Identifiable {
+struct Photo: Identifiable, Codable {
     let id: String
-    let favorite: Bool = false
+    var favorite: Bool = false
 }

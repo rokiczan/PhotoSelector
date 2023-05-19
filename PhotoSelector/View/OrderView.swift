@@ -12,23 +12,27 @@ struct OrderView: View {
     @EnvironmentObject var viewState: ViewState
     @EnvironmentObject var store: OrderStore
     
+    @Binding var order: Order
+    
     @State private var selectedItems = [PhotosPickerItem]()
-    @State private var selectedPhotos = [Photo]()
+
     
     var body: some View {
         VStack {
             HStack{
                 
-                if let selectedOrder = viewState.selectedOrder, let index = store.index(for: selectedOrder) {
+                if let selectedOrder = viewState.selectedOrder {
                     Text("zz\(selectedOrder.id)")
+                    Button(action: {
+                        viewState.showAllOrders = true
+                    }) {
+                        Text("Done")
+                    }
                 }
                 //Text("\(viewState.selectedOrder)")
-                Button(action: {viewState.showAllOrders = true}) {
-                    Text("Done")
-                }
             }
             TabView{
-                ForEach(selectedPhotos) { selectedPhoto in
+                ForEach(order.photos) { selectedPhoto in
                     PhotoView(fileName: selectedPhoto.id)
                 }
             }
@@ -36,7 +40,7 @@ struct OrderView: View {
             
             ScrollView(.horizontal){
                 HStack{
-                    ForEach(selectedPhotos) { selectedPhoto in
+                    ForEach(order.photos) { selectedPhoto in
                         PhotoView(fileName: selectedPhoto.id)
                     }
                 }
@@ -56,7 +60,8 @@ struct OrderView: View {
                                         let uniqueName = UUID().uuidString
                                         try? jpegData.write(to: savePath.appendingPathComponent("\(uniqueName).jpg"))
                                         let photo = Photo(id: uniqueName)
-                                        selectedPhotos.append(photo)
+                                        
+                                        order.addPhoto(photo: photo)
                                     }
                                 }
                             }
@@ -65,13 +70,7 @@ struct OrderView: View {
                 }
         }
         .padding()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {viewState.showAllOrders = true}) {
-                    Text("Done")
-                }
-            }
-        }
+
     }
 }
 
