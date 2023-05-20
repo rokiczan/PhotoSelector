@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Order: Identifiable {
+    
     var id = UUID()
     var photos: [Photo] = []
     func save() {

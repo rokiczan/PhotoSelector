@@ -11,6 +11,7 @@ import PhotosUI
 struct OrderView: View {
     @EnvironmentObject var viewState: ViewState
     @EnvironmentObject var store: OrderStore
+    @Environment(\.scenePhase) private var scenePhase
     
     @Binding var order: Order
     
@@ -32,18 +33,19 @@ struct OrderView: View {
                 //Text("\(viewState.selectedOrder)")
             }
             TabView{
-                ForEach(order.photos) { selectedPhoto in
-                    PhotoView(fileName: selectedPhoto.id)
+                ForEach($order.photos, id: \.id) { $photo in
+                    PhotoView(fileName: $photo.id, score: $photo.score)
                 }
             }
             .tabViewStyle(.page)
             
             ScrollView(.horizontal){
                 HStack{
-                    ForEach(order.photos) { selectedPhoto in
-                        PhotoView(fileName: selectedPhoto.id)
+                    ForEach($order.photos, id: \.id) { $photo in
+                        PhotoView(fileName: $photo.id, score: $photo.score)
                     }
                 }
+
             }
             .frame(height: 100)
             
@@ -59,7 +61,7 @@ struct OrderView: View {
                                     if let jpegData = uiImage.jpegData(compressionQuality: 0.8) {
                                         let uniqueName = UUID().uuidString
                                         try? jpegData.write(to: savePath.appendingPathComponent("\(uniqueName).jpg"))
-                                        let photo = Photo(id: uniqueName)
+                                        let photo = Photo(id: uniqueName, score: 1)
                                         
                                         order.addPhoto(photo: photo)
                                     }
@@ -68,6 +70,14 @@ struct OrderView: View {
                         }
                     }
                 }
+        }
+        .onChange(of: scenePhase) { newScenePhase in
+          if newScenePhase == .inactive {
+            order.save()
+          }
+        }
+        .onDisappear {
+          order.save()
         }
         .padding()
 

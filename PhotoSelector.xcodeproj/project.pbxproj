@@ -100,10 +100,10 @@
 		5426690B29F57A2300A32219 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				542668FD29F578E200A32219 /* OrderView.swift */,
 				547758722A12901A0049F798 /* OrdersView.swift */,
 				5426690C29F57AEC00A32219 /* ScoreView.swift */,
 				5426691129F673F300A32219 /* ToolbarView.swift */,
+				542668FD29F578E200A32219 /* OrderView.swift */,
 				54B6A9A129F71ACB00BDC714 /* PhotoView.swift */,
 				547758762A1380AF0049F798 /* ListSelectionView.swift */,
 				547758782A14C5C60049F798 /* OrdersListView.swift */,
