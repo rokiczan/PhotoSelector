@@ -13,7 +13,7 @@ struct PhotoView: View {
     
     var body: some View {
         
-        if let uiImage = UIImage(contentsOfFile: FileManager.documentsDirectory.appending(path: "\(fileName).jpg").path() ) {
+        if let uiImage = UIImage(contentsOfFile: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appending(path: "\(fileName).jpg").path() ) {
             ZStack{
                 
             Image(uiImage: uiImage)

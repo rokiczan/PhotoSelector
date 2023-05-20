@@ -53,7 +53,7 @@ struct OrderView: View {
    
                 .onChange(of: selectedItems) { selectedItems in
                     Task {
-                        let savePath = FileManager.documentsDirectory
+                        let savePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
                         print(savePath)
                         for item in selectedItems {
                             if let data = try? await item.loadTransferable(type: Data.self){
