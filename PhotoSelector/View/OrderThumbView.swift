@@ -26,8 +26,10 @@ struct OrderThumbView: View {
     }
 }
 
-//struct OrderThumbView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OrderThumbView()
-//    }
-//}
+struct OrderThumbView_Previews: PreviewProvider {
+    static var previews: some View {
+        OrderThumbView(order: initialOrders[0])
+            .environmentObject(ViewState())
+            .environmentObject(OrderStore())
+    }
+}

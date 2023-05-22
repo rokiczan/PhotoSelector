@@ -51,3 +51,10 @@ extension Order: Codable {
         try container.encode(photos, forKey: .photos)
     }
 }
+
+
+extension Order: Equatable {
+    static func ==(lhs: Order, rhs: Order) -> Bool {
+        return lhs.id == rhs.id && lhs.id == rhs.id
+    }
+}

@@ -16,7 +16,7 @@ struct OrderView: View {
     @Binding var order: Order
     
     @State private var selectedItems = [PhotosPickerItem]()
-
+    @State var showPicker: Bool = false
     
     var body: some View {
         VStack {
@@ -30,7 +30,6 @@ struct OrderView: View {
                         Text("Done")
                     }
                 }
-                //Text("\(viewState.selectedOrder)")
             }
             TabView{
                 ForEach($order.photos, id: \.id) { $photo in
@@ -49,7 +48,22 @@ struct OrderView: View {
             }
             .frame(height: 100)
             
-            ToolbarView(selectedItems: $selectedItems)
+            HStack{
+                Button(action: {showPicker.toggle()}) {
+                    VStack {
+                        Image(systemName: "photo")
+                        Text("Add photos")
+                    }
+                }
+
+                Button(action: {}) {
+                    VStack {
+                        Image(systemName: "delete.left")
+                        Text("Delete photos")
+                    }
+                }
+            }
+            .photosPicker(isPresented: $showPicker, selection: $selectedItems)
    
                 .onChange(of: selectedItems) { selectedItems in
                     Task {
@@ -84,8 +98,10 @@ struct OrderView: View {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        OrderView(order: .constant(initialOrders[0]))
+            .environmentObject(ViewState())
+            .environmentObject(OrderStore())
+    }
+}

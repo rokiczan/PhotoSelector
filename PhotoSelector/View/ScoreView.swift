@@ -37,10 +37,10 @@ struct ScoreView: View {
         }
     }
 }
-//
-//struct ScoreView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ScoreView()
-//            .previewLayout(.sizeThatFits)
-//    }
-//}
+
+struct ScoreView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScoreView(score: .constant(3))
+            .previewLayout(.sizeThatFits)
+    }
+}

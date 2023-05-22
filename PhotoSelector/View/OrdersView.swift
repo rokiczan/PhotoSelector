@@ -57,10 +57,10 @@ struct OrdersView: View {
     }
 }
 
-//struct OrdersView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OrdersView()
-//            .environmentObject(ViewState())
-//            .environmentObject(OrderStore())
-//    }
-//}
+struct OrdersView_Previews: PreviewProvider {
+    static var previews: some View {
+        OrdersView()
+            .environmentObject(ViewState())
+            .environmentObject(OrderStore())
+    }
+}
