@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PhotoView: View {
-    @Binding var fileName: String
+    @Binding var fileName: UUID
     @Binding var score: Int
     
     var body: some View {
@@ -28,6 +28,6 @@ struct PhotoView: View {
 
 struct PhotoView_Previews: PreviewProvider {
     static var previews: some View {
-        PhotoView(fileName: .constant(""), score: .constant(3))
+        PhotoView(fileName: .constant(UUID()), score: .constant(3))
     }
 }

@@ -17,6 +17,7 @@ struct OrderView: View {
     
     @State private var selectedItems = [PhotosPickerItem]()
     @State var showPicker: Bool = false
+    //@State var selectedPhoto:
     
     var body: some View {
         VStack {
@@ -32,7 +33,7 @@ struct OrderView: View {
                 }
             }
             TabView{
-                ForEach($order.photos, id: \.id) { $photo in
+                ForEach($order.photos) { $photo in
                     PhotoView(fileName: $photo.id, score: $photo.score)
                 }
             }
@@ -40,7 +41,8 @@ struct OrderView: View {
             
             ScrollView(.horizontal){
                 HStack{
-                    ForEach($order.photos, id: \.id) { $photo in
+                    ForEach($order.photos) { $photo in
+                        
                         PhotoView(fileName: $photo.id, score: $photo.score)
                     }
                 }
@@ -73,8 +75,8 @@ struct OrderView: View {
                             if let data = try? await item.loadTransferable(type: Data.self){
                                 if let uiImage = UIImage(data: data) {
                                     if let jpegData = uiImage.jpegData(compressionQuality: 0.8) {
-                                        let uniqueName = UUID().uuidString
-                                        try? jpegData.write(to: savePath.appendingPathComponent("\(uniqueName).jpg"))
+                                        let uniqueName = UUID()
+                                        try? jpegData.write(to: savePath.appendingPathComponent("\(uniqueName.uuidString).jpg"))
                                         let photo = Photo(id: uniqueName, score: 1)
                                         
                                         order.addPhoto(photo: photo)

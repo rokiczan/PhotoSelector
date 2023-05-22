@@ -8,7 +8,7 @@
 import SwiftUI
 
 let initialPhotos: [Photo] = [
-Photo(id: "example", score: 3)]
+Photo(id: UUID(), score: 3)]
 
 let initialOrders: [Order] = [
 Order(id: UUID(), photos: initialPhotos)]

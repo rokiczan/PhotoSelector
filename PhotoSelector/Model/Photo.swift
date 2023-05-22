@@ -8,6 +8,6 @@
 import SwiftUI
 
 struct Photo: Identifiable, Codable {
-    var id: String
+    var id: UUID
     var score: Int
 }
