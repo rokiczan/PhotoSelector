@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Photo: Identifiable, Codable {
+struct Photo: Identifiable, Codable, Hashable {
     var id: UUID
     var score: Int
 }

@@ -23,6 +23,7 @@
 		54A882442A16056600BF8B45 /* OrderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A882432A16056600BF8B45 /* OrderListView.swift */; };
 		54B6A9A229F71ACB00BDC714 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B6A9A129F71ACB00BDC714 /* PhotoView.swift */; };
 		54E522732A1A34A00063AF4E /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E522722A1A34A00063AF4E /* PreviewData.swift */; };
+		54E522752A1B9BBF0063AF4E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E522742A1B9BBF0063AF4E /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		54A882432A16056600BF8B45 /* OrderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListView.swift; sourceTree = "<group>"; };
 		54B6A9A129F71ACB00BDC714 /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		54E522722A1A34A00063AF4E /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
+		54E522742A1B9BBF0063AF4E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				5426690E29F66C8B00A32219 /* Model */,
 				5426690B29F57A2300A32219 /* View */,
 				542668FF29F578E300A32219 /* Assets.xcassets */,
+				54E522742A1B9BBF0063AF4E /* Extension.swift */,
 			);
 			path = PhotoSelector;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				547758792A14C5C60049F798 /* OrdersListView.swift in Sources */,
 				5477587D2A14E94C0049F798 /* OrdersThumbView.swift in Sources */,
 				5477587B2A14CFC10049F798 /* OrderThumbView.swift in Sources */,
+				54E522752A1B9BBF0063AF4E /* Extension.swift in Sources */,
 				547758772A1380AF0049F798 /* ListSelectionView.swift in Sources */,
 				54E522732A1A34A00063AF4E /* PreviewData.swift in Sources */,
 				547758752A12A0120049F798 /* ViewState.swift in Sources */,

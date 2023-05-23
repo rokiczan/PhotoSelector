@@ -17,7 +17,7 @@ struct OrderView: View {
     
     @State private var selectedItems = [PhotosPickerItem]()
     @State var showPicker: Bool = false
-    //@State var selectedPhoto:
+    @State var selectedPhoto: UUID = UUID()
     
     var body: some View {
         VStack {
@@ -31,19 +31,24 @@ struct OrderView: View {
                         Text("Done")
                     }
                 }
+                Text("x\(selectedPhoto)")
+
             }
-            TabView{
-                ForEach($order.photos) { $photo in
-                    PhotoView(fileName: $photo.id, score: $photo.score)
+           
+            TabView(selection: $selectedPhoto){
+                ForEach($order.photos) { photo in
+                    PhotoView(fileName: photo.id, score: photo.score)
+                       
                 }
             }
             .tabViewStyle(.page)
             
             ScrollView(.horizontal){
                 HStack{
-                    ForEach($order.photos) { $photo in
-                        
-                        PhotoView(fileName: $photo.id, score: $photo.score)
+                    ForEach($order.photos) { photo in
+                        Button(action: { selectedPhoto = photo.id }) {
+                            PhotoView(fileName: photo.id, score: photo.score)
+                        }
                     }
                 }
 
@@ -51,7 +56,10 @@ struct OrderView: View {
             .frame(height: 100)
             
             HStack{
-                Button(action: {showPicker.toggle()}) {
+                Button(action: {
+                    selectedItems.removeAll() //show picker without previous selection
+                    showPicker.toggle()
+                }) {
                     VStack {
                         Image(systemName: "photo")
                         Text("Add photos")
@@ -65,7 +73,7 @@ struct OrderView: View {
                     }
                 }
             }
-            .photosPicker(isPresented: $showPicker, selection: $selectedItems)
+            .photosPicker(isPresented: $showPicker, selection: $selectedItems, matching: .images)
    
                 .onChange(of: selectedItems) { selectedItems in
                     Task {
@@ -74,7 +82,8 @@ struct OrderView: View {
                         for item in selectedItems {
                             if let data = try? await item.loadTransferable(type: Data.self){
                                 if let uiImage = UIImage(data: data) {
-                                    if let jpegData = uiImage.jpegData(compressionQuality: 0.8) {
+                                    let reducedImage = uiImage.reduceToHeight(targetHeight: 800)
+                                    if let jpegData = reducedImage.jpegData(compressionQuality: 0.7) {
                                         let uniqueName = UUID()
                                         try? jpegData.write(to: savePath.appendingPathComponent("\(uniqueName.uuidString).jpg"))
                                         let photo = Photo(id: uniqueName, score: 1)
@@ -86,6 +95,7 @@ struct OrderView: View {
                         }
                     }
                 }
+            
         }
         .onChange(of: scenePhase) { newScenePhase in
           if newScenePhase == .inactive {
