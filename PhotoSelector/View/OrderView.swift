@@ -19,8 +19,11 @@ struct OrderView: View {
     @State var showPicker: Bool = false
     @State var selectedPhoto: UUID = UUID()
     
+    @State var filter: Int = 0
+    
     var body: some View {
         VStack {
+            ScoreView(score: $filter)
             HStack{
                 
                 if let selectedOrder = viewState.selectedOrder {
@@ -46,8 +49,10 @@ struct OrderView: View {
             ScrollView(.horizontal){
                 HStack{
                     ForEach($order.photos) { photo in
-                        Button(action: { selectedPhoto = photo.id }) {
-                            PhotoView(fileName: photo.id, score: photo.score)
+                        if (filter <= photo.score.wrappedValue){ //to access underlying Int value
+                            Button(action: { selectedPhoto = photo.id }) {
+                                PhotoView(fileName: photo.id, score: photo.score)
+                            }
                         }
                     }
                 }

@@ -16,22 +16,20 @@ struct ScoreView: View {
     
     func updateRating(index: Int) {
         score = index
-        
     }
     
     var body: some View {
         HStack {
-            ForEach(1 ..< maxScore + 1) { i in
+            ForEach(0 ..< maxScore + 1) { i in
                 
                 Button(action: {
                     updateRating(index: i)
                 }, label: {
-                    Image(systemName: "star.fill")
+                   
+                    Image(systemName: i == 0 ? "star.slash" : "star.fill")
                         .foregroundColor(
-                            i > score ? unmarkedColor : markedColor)
+                            i == 0 || i > score ? unmarkedColor : markedColor)
                 })
-                
-                
                 
             }
         }
