@@ -12,8 +12,13 @@ struct OrdersListView: View {
     @EnvironmentObject var store: OrderStore
     
     var body: some View {
+//        List{
+//            ForEach(store.orders) { order in
+//                OrderListView(order: order)
+//            }
+//        }
         ScrollView{
-            LazyVGrid(columns: [GridItem(.flexible())]) {
+            LazyVGrid(columns: [GridItem(.flexible())], spacing: 1) {
                 ForEach(store.orders) { order in
                     OrderListView(order: order)
                 }

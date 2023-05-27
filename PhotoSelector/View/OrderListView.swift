@@ -15,6 +15,11 @@ struct OrderListView: View {
     
     var body: some View {
         Text("order: \(order.id)")
+            .frame(maxWidth: .infinity)
+            .padding(10)
+            .font(.system(size: 20, weight: .bold))
+            .foregroundColor(Color(.white))
+            .background(Color(.gray))
             .onTapGesture {
                 withAnimation {
                     viewState.selectedOrder = order
@@ -30,5 +35,6 @@ struct OrderListView_Previews: PreviewProvider {
         OrderListView(order: initialOrders[0])
             .environmentObject(ViewState())
             .environmentObject(OrderStore())
+            .previewLayout(.sizeThatFits)
     }
 }

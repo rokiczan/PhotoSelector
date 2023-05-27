@@ -40,8 +40,9 @@ struct OrderView: View {
            
             TabView(selection: $selectedPhoto){
                 ForEach($order.photos) { photo in
-                    PhotoView(fileName: photo.id, score: photo.score)
-                       
+                    if (filter <= photo.score.wrappedValue){
+                        PhotoView(fileName: photo.id, score: photo.score)
+                    }
                 }
             }
             .tabViewStyle(.page)

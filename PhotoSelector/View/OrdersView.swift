@@ -15,7 +15,7 @@ struct OrdersView: View {
         VStack {
             if viewState.showAllOrders {
                 ListSelectionView(selection: $viewState.orderListState)
-                Spacer()
+                
                 addButton
                 ZStack {
                     switch viewState.orderListState {
@@ -47,12 +47,12 @@ struct OrdersView: View {
         } label: {
             Label("New Order", systemImage: "plus")
                 .frame(maxWidth: .infinity)
-                .padding(20)
+                .padding(10)
         }
         .font(.system(size: 20, weight: .bold))
         .foregroundColor(Color(.white))
         .background(Color(.black))
-        .padding([.top, .bottom], 30)
+        .padding([.top, .bottom], 0)
 
     }
 }
