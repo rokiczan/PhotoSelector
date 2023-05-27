@@ -9,8 +9,9 @@ import SwiftUI
 
 class OrderStore: ObservableObject {
     @Published var orders: [Order] = []
-    init() {
-        orders = load()
+    
+    init(previewData: Bool = false) {
+        orders = previewData ? initialOrders : load()
     }
     
     func addOrder() -> Order {

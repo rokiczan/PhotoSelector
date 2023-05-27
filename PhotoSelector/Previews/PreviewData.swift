@@ -11,4 +11,8 @@ let initialPhotos: [Photo] = [
 Photo(id: UUID(), score: 3)]
 
 let initialOrders: [Order] = [
-Order(id: UUID(), photos: initialPhotos)]
+Order(id: UUID(), photos: initialPhotos),
+Order(id: UUID(), photos: initialPhotos),
+Order(id: UUID(), photos: initialPhotos),
+Order(id: UUID(), photos: initialPhotos)
+]

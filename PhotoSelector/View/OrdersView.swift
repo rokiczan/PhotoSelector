@@ -61,6 +61,6 @@ struct OrdersView_Previews: PreviewProvider {
     static var previews: some View {
         OrdersView()
             .environmentObject(ViewState())
-            .environmentObject(OrderStore())
+            .environmentObject(OrderStore(previewData: true))
     }
 }
