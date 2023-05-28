@@ -21,6 +21,13 @@ struct OrdersListView: View {
             LazyVGrid(columns: [GridItem(.flexible())], spacing: 1) {
                 ForEach(store.orders) { order in
                     OrderListView(order: order)
+                        .contextMenu{
+                            Button {
+                                store.removeOrder(order)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                 }
             }
         }

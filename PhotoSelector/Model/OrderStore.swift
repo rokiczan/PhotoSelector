@@ -24,6 +24,22 @@ class OrderStore: ObservableObject {
     func index(for order: Order) -> Int? {
         orders.firstIndex { $0.id == order.id }
     }
+    
+    func removeOrder(_ order: Order) {
+        if let index = index(for: order) {
+            orders.remove(at: index)
+        }
+        
+        for photo in order.photos {
+            if let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("\(photo.id).jpg") {
+                try? FileManager.default.removeItem(at: path)
+            }
+        }
+            
+        if let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("\(order.id.uuidString).order") {
+            try? FileManager.default.removeItem(at: path)
+        }
+    }
 }
 
 extension OrderStore {
