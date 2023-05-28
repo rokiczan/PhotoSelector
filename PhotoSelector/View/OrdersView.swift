@@ -12,11 +12,12 @@ struct OrdersView: View {
     @EnvironmentObject var store: OrderStore
     
     var body: some View {
-        VStack {
+        VStack(spacing: 1) {
             if viewState.showAllOrders {
                 ListSelectionView(selection: $viewState.orderListState)
                 
                 addButton
+                    .padding([.top], 20)
                 ZStack {
                     switch viewState.orderListState {
                     case .list:

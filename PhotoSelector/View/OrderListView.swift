@@ -15,7 +15,7 @@ struct OrderListView: View {
     
     var body: some View {
         Text("order: \(order.id)")
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(10)
             .font(.system(size: 20, weight: .bold))
             .foregroundColor(Color(.white))
@@ -26,6 +26,7 @@ struct OrderListView: View {
                     viewState.showAllOrders = false
                 }
             }
+
         
     }
 }
