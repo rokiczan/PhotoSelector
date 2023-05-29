@@ -29,6 +29,17 @@ struct Order: Identifiable {
         photos.append(photo)
         save()
     }
+    
+    func index(for photo: Photo) -> Int? {
+        photos.firstIndex { $0.id == photo.id }
+    }
+    
+    mutating func removePhoto(photo: Photo) {
+        if let index = index(for: photo) {
+            photos.remove(at: index)
+        }
+        save()
+    }
 }
 
 extension Order: Codable {

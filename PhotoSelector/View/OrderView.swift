@@ -23,21 +23,29 @@ struct OrderView: View {
     
     var body: some View {
         VStack {
-            ScoreView(score: $filter)
+            if let selectedOrder = viewState.selectedOrder {
             HStack{
-                
-                if let selectedOrder = viewState.selectedOrder {
-                    Text("zz\(selectedOrder.id)")
-                    Button(action: {
-                        viewState.showAllOrders = true
-                    }) {
-                        Text("Done")
+                Button(action: {
+                    selectedItems.removeAll() //show picker without previous selection
+                    showPicker.toggle()
+                }) {
+                    VStack {
+                        Image(systemName: "plus")
                     }
                 }
-                Text("x\(selectedPhoto)")
-
+                Spacer()
+                Text("Order ID: \(selectedOrder.id)")
+                Spacer()
+                Button(action: {
+                    viewState.showAllOrders = true
+                }) {
+                    Text("Done")
+                }
+                }
+                
             }
            
+            ScoreView(score: $filter)
             TabView(selection: $selectedPhoto){
                 ForEach($order.photos) { photo in
                     if (filter <= photo.score.wrappedValue){
@@ -54,31 +62,19 @@ struct OrderView: View {
                             Button(action: { selectedPhoto = photo.id }) {
                                 PhotoView(fileName: photo.id, score: photo.score)
                             }
+                            .contextMenu{
+                                Button {
+                                    order.removePhoto(photo: photo.wrappedValue)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                         }
                     }
                 }
 
             }
-            .frame(height: 100)
-            
-            HStack{
-                Button(action: {
-                    selectedItems.removeAll() //show picker without previous selection
-                    showPicker.toggle()
-                }) {
-                    VStack {
-                        Image(systemName: "photo")
-                        Text("Add photos")
-                    }
-                }
-
-                Button(action: {}) {
-                    VStack {
-                        Image(systemName: "delete.left")
-                        Text("Delete photos")
-                    }
-                }
-            }
+            .frame(height: 100)            
             .photosPicker(isPresented: $showPicker, selection: $selectedItems, matching: .images)
    
                 .onChange(of: selectedItems) { selectedItems in
@@ -101,7 +97,6 @@ struct OrderView: View {
                         }
                     }
                 }
-            
         }
         .onChange(of: scenePhase) { newScenePhase in
           if newScenePhase == .inactive {
@@ -112,7 +107,6 @@ struct OrderView: View {
           order.save()
         }
         .padding()
-
     }
 }
 
