@@ -34,4 +34,35 @@ extension Date {
     }
 }
 
+extension View {
+    @ViewBuilder func `conditionalModifier`<Modifier: ViewModifier>(_ condition: Bool, modifier: Modifier) -> some View {
+        if condition {
+            self.modifier(modifier)
+        } else {
+            self
+        }
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func `if`<Content: View>(_ condition: Bool, content: (Self) -> Content) -> some View {
+        if condition {
+            content(self)
+        } else {
+            self
+        }
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func `if`<TrueContent: View, FalseContent: View>(_ condition: Bool, ifTrue trueContent: (Self) -> TrueContent, else falseContent: (Self) -> FalseContent) -> some View {
+        if condition {
+            trueContent(self)
+        } else {
+            falseContent(self)
+        }
+    }
+}
 

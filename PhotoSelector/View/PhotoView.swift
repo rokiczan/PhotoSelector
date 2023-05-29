@@ -15,13 +15,14 @@ struct PhotoView: View {
         
         let image = UIImage(contentsOfFile: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appending(path: "\(fileName).jpg").path())
                             
-        ZStack{
+        VStack{
 
         Image(uiImage: image ?? UIImage(systemName: "exclamationmark.triangle.fill")!)
             .resizable()
             .scaledToFit()
             .cornerRadius(8.0)
             ScoreView(score: $score)
+                
         }
     }
 }

@@ -65,6 +65,8 @@ struct OrderView: View {
                         if (filter <= photo.score.wrappedValue){ //to access underlying Int value
                             Button(action: { selectedPhoto = photo.id }) {
                                 PhotoView(fileName: photo.id, score: photo.score)
+                                    .padding(5)
+                                    .if(selectedPhoto == photo.id) { $0.shadow(color: .gray, radius: 4, x: 2, y: 2) }
                             }
                             .contextMenu{
                                 Button {
@@ -78,7 +80,7 @@ struct OrderView: View {
                 }
 
             }
-            .frame(height: 100)            
+            .frame(height: 150)
             .photosPicker(isPresented: $showPicker, selection: $selectedItems, matching: .images)
    
                 .onChange(of: selectedItems) { selectedItems in
