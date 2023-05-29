@@ -25,3 +25,13 @@ extension UIImage {
         }
     }
 }
+
+extension Date {
+    func formatted(as format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
+}
+
+

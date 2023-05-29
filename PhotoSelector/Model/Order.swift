@@ -11,6 +11,7 @@ struct Order: Identifiable {
     
     var id = UUID()
     var photos: [Photo] = []
+    var date: Date = Date()
     func save() {
         do {
             let encoder = JSONEncoder()
@@ -44,7 +45,7 @@ struct Order: Identifiable {
 
 extension Order: Codable {
     enum CodingKeys: CodingKey {
-        case id, photos
+        case id, photos, date
     }
     
     init(from decoder: Decoder) throws {
@@ -53,6 +54,8 @@ extension Order: Codable {
         self.id = UUID(uuidString: id) ?? UUID()
         
         photos += try container.decode([Photo].self, forKey: .photos)
+        
+        self.date = try container.decode(Date.self, forKey: .date)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -60,6 +63,7 @@ extension Order: Codable {
         try container.encode(id.uuidString, forKey: .id)
         let photos: [Photo] = photos.compactMap{$0 as Photo}
         try container.encode(photos, forKey: .photos)
+        try container.encode(date, forKey: .date)
     }
 }
 

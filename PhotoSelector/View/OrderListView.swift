@@ -14,7 +14,7 @@ struct OrderListView: View {
     let order: Order
     
     var body: some View {
-        Text("order: \(order.id)")
+        Text("order: \(order.id), created \(order.date.formatted(as: "yyyy-MM-dd HH:mm:ss"))")
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(10)
             .font(.system(size: 20, weight: .bold))

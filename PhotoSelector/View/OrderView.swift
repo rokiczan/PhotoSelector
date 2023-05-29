@@ -23,7 +23,7 @@ struct OrderView: View {
     
     var body: some View {
         VStack {
-            if let selectedOrder = viewState.selectedOrder {
+
             HStack{
                 Button(action: {
                     selectedItems.removeAll() //show picker without previous selection
@@ -34,7 +34,12 @@ struct OrderView: View {
                     }
                 }
                 Spacer()
-                Text("Order ID: \(selectedOrder.id)")
+                Text("created \(order.date.formatted(as: "yyyy-MM-dd HH:mm:ss"))")
+                Spacer()
+                Text("show ≥")
+                ScoreView(score: $filter)
+                Spacer()
+                Text("\(order.photos.filter{ $0.score >= filter }.count) / \(order.photos.count)")
                 Spacer()
                 Button(action: {
                     viewState.showAllOrders = true
@@ -43,12 +48,10 @@ struct OrderView: View {
                 }
                 }
                 
-            }
-           
-            ScoreView(score: $filter)
             TabView(selection: $selectedPhoto){
                 ForEach($order.photos) { photo in
                     if (filter <= photo.score.wrappedValue){
+                        
                         PhotoView(fileName: photo.id, score: photo.score)
                     }
                 }
@@ -58,6 +61,7 @@ struct OrderView: View {
             ScrollView(.horizontal){
                 HStack{
                     ForEach($order.photos) { photo in
+                        
                         if (filter <= photo.score.wrappedValue){ //to access underlying Int value
                             Button(action: { selectedPhoto = photo.id }) {
                                 PhotoView(fileName: photo.id, score: photo.score)
@@ -88,7 +92,7 @@ struct OrderView: View {
                                     if let jpegData = reducedImage.jpegData(compressionQuality: 0.7) {
                                         let uniqueName = UUID()
                                         try? jpegData.write(to: savePath.appendingPathComponent("\(uniqueName.uuidString).jpg"))
-                                        let photo = Photo(id: uniqueName, score: 1)
+                                        let photo = Photo(id: uniqueName, score: 0)
                                         
                                         order.addPhoto(photo: photo)
                                     }
