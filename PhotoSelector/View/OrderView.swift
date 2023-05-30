@@ -51,38 +51,37 @@ struct OrderView: View {
             TabView(selection: $selectedPhoto){
                 ForEach($order.photos) { photo in
                     if (filter <= photo.score.wrappedValue){
-                        
                         PhotoView(fileName: photo.id, score: photo.score)
                     }
                 }
             }
-            .tabViewStyle(.page)
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             
-            ScrollView(.horizontal){
-                HStack{
-                    ForEach($order.photos) { photo in
-                        
-                        if (filter <= photo.score.wrappedValue){ //to access underlying Int value
-                            Button(action: { selectedPhoto = photo.id }) {
-                                PhotoView(fileName: photo.id, score: photo.score)
-                                    .padding(5)
-                                    .if(selectedPhoto == photo.id) { $0.shadow(color: .gray, radius: 4, x: 2, y: 2) }
-                            }
-                            .contextMenu{
-                                Button {
-                                    order.removePhoto(photo: photo.wrappedValue)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+            ScrollViewReader{ proxy in
+                ScrollView(.horizontal){
+                    HStack{
+                        ForEach($order.photos) { photo in
+                            
+                            if (filter <= photo.score.wrappedValue){ //to access underlying Int value
+                                Button(action: { selectedPhoto = photo.id }) {
+                                    PhotoView(fileName: photo.id, score: photo.score)
+                                        .padding(5)
+                                        .if(selectedPhoto == photo.id) { $0.shadow(color: .gray, radius: 4, x: 2, y: 2) }
+                                }
+                                .contextMenu{
+                                    Button {
+                                        order.removePhoto(photo: photo.wrappedValue)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-            }
-            .frame(height: 150)
-            .photosPicker(isPresented: $showPicker, selection: $selectedItems, matching: .images)
-   
+                }
+                .frame(height: 150)
+                .photosPicker(isPresented: $showPicker, selection: $selectedItems, matching: .images)
                 .onChange(of: selectedItems) { selectedItems in
                     Task {
                         let savePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -103,6 +102,14 @@ struct OrderView: View {
                         }
                     }
                 }
+                .onChange(of: selectedPhoto) { selectedPhoto in
+                    withAnimation {
+                        proxy.scrollTo(selectedPhoto)
+                    }
+                }
+            }
+            
+
         }
         .onChange(of: scenePhase) { newScenePhase in
           if newScenePhase == .inactive {
