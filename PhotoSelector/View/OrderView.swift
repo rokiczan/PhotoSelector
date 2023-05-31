@@ -12,6 +12,7 @@ struct OrderView: View {
     @EnvironmentObject var viewState: ViewState
     @EnvironmentObject var store: OrderStore
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     @Binding var order: Order
     
@@ -34,9 +35,12 @@ struct OrderView: View {
                     }
                 }
                 Spacer()
+                if horizontalSizeClass != .compact {
+                    
                 Text("created \(order.date.formatted(as: "yyyy-MM-dd HH:mm:ss"))")
                 Spacer()
                 Text("show ≥")
+                }
                 ScoreView(score: $filter)
                 Spacer()
                 Text("\(order.photos.filter{ $0.score >= filter }.count) / \(order.photos.count)")
